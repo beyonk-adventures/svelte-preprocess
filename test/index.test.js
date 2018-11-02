@@ -258,7 +258,7 @@ describe('style - postcss', () => {
   })
 })
 
-describe.only('detect - mimetype', () => {
+describe('detect - mimetype', () => {
   const MIMETYPES = [
     { type: 'application/ld+json', parser: 'ld+json' },
     { type: 'text/some-other', parser: 'some-other' },

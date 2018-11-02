@@ -21,6 +21,10 @@ exports.aliasOverrides = {
   },
 }
 
+exports.loadTransformerFromModule = (lang, options = {}) => {
+  transformers[lang] = exports.isFn(options[lang]) ? options[lang] : require(`./transformers/${lang}.js`)
+}
+
 exports.throwError = msg => {
   throw new Error(`[svelte-preprocess] ${msg}`)
 }
@@ -91,7 +95,7 @@ exports.runTransformer = (name, options, { content, filename }) => {
 
   try {
     if (!transformers[name]) {
-      transformers[name] = require(`./transformers/${name}.js`)
+      exports.loadTransformerFromModule(name)
     }
 
     return transformers[name]({ content, filename, options })

@@ -4,6 +4,7 @@ const {
   addLanguageAlias,
   getLanguage,
   runTransformer,
+  loadTransformerFromModule,
   isFn,
   parseAttributes,
   getSrcContent,
@@ -71,6 +72,8 @@ module.exports = ({ onBefore, transformers = {}, aliases } = {}) => {
     ) {
       throwUnsupportedError(alias, filename)
     }
+
+    loadTransformerFromModule(lang, transformers)
 
     return runTransformer(lang, getTransformerOpts(lang, alias), {
       content: stripIndent(content),
