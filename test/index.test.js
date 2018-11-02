@@ -258,6 +258,23 @@ describe('style - postcss', () => {
   })
 })
 
+describe.only('detect - mimetype', () => {
+  const MIMETYPES = [
+    { type: 'application/ld+json', parser: 'ld+json' },
+    { type: 'text/some-other', parser: 'some-other' },
+    { lang: 'stylus', parser: 'stylus' }
+  ]
+
+  MIMETYPES.forEach(({ type, lang, parser }) => {
+    it(`should detect ${type || lang} as ${parser}`, async () => {
+      expect(getLanguage({ type, lang }, 'css')).toEqual({
+        lang: parser,
+        alias: parser,
+      })
+    })
+  })
+})
+
 describe('externally hosted files', () => {
   const EXTERNALJS = [
     'https://www.example.com/some/externally/delivered/content.js',
